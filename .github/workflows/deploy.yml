@@ -3,7 +3,7 @@ name: Deploy Next.js site to GitHub Pages
 on:
   # Запускать при пуше в ветку main
   push:
-    branches: ["main"]
+    branches: ['main']
   # Разрешить запуск workflow вручную
   workflow_dispatch:
 
@@ -15,7 +15,7 @@ permissions:
 
 # Разрешаем один одновременный деплой
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
@@ -28,9 +28,11 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: '20'
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        with:
+          enablement: true
       - name: Install dependencies
         run: npm ci
       - name: Build with Next.js
@@ -50,4 +52,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4

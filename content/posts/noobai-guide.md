@@ -1,10 +1,14 @@
 ---
-title: 'NoobAI-XL'
-date: '2024-06-01'
+title: 'NoobAI-XL (перевод)'
+date: '2025-04-26'
 description: 'NoobAI-XL — Введение и Руководство пользователя'
 ---
 
 ## 1. Введение
+
+[Оригинал](https://d0xb9r3fg5h.feishu.cn/docx/WWOHdr6RMoQZxQxCZRGc5KlEnUi)
+
+[English Version](https://civitai.com/articles/9986/noobai-xl-full-official-guide-translated)
 
 Этот документ предназначен для подробного и актуального ознакомления с моделью **NoobAI-XL**.
 
