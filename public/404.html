@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Перенаправление...</title>
+    <script>
+      // Проверяем текущий URL
+      var pathname = window.location.pathname
+
+      // Если мы находимся в корне и это не /rityak
+      if (pathname === '/' || pathname === '') {
+        // Перенаправляем на /rityak
+        window.location.href = '/rityak/'
+      } else if (!pathname.startsWith('/rityak/')) {
+        // Если путь не начинается с /rityak/, добавляем префикс
+        // Убираем начальный слеш из текущего пути
+        var newPath = '/rityak' + pathname
+        window.location.href = newPath
+      }
+    </script>
+  </head>
+  <body>
+    <p>Перенаправление на главную страницу...</p>
+  </body>
+</html>
