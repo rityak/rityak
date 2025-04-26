@@ -15,16 +15,16 @@ export async function generateStaticParams(): Promise<StaticParams> {
   return posts
 }
 
-// Указываем тип для параметров страницы
-type PageParams = {
-  params: {
+// Используем правильный тип для параметров страницы Next.js 15.3.1
+type Props = {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default async function Post({ params }: PageParams) {
+export default async function Post({ params }: Props) {
   try {
-    // Ожидаем получение params перед использованием его свойств
+    // В Next.js 15.3.1 params является Promise
     const resolvedParams = await params
     const postData: PostData = await getPostData(resolvedParams.id)
 
