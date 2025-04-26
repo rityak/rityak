@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import './globals.css'
@@ -9,15 +9,18 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
-export const metadata: Metadata = {
-  title: 'Мой блог на GitHub Pages',
-  description:
-    'Персональный блог с моими мыслями и идеями о технологиях и программировании',
-  viewport: 'width=device-width, initial-scale=1',
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#f9fafb' },
     { media: '(prefers-color-scheme: dark)', color: '#030712' },
   ],
+}
+
+export const metadata: Metadata = {
+  title: 'rityak.github.io',
+  description: 'rityak.github.io',
 }
 
 export default function RootLayout({

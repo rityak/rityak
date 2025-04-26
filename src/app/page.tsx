@@ -1,8 +1,16 @@
 import Link from 'next/link'
 import { getSortedPostsData } from '../lib/posts'
 
+// Используем типы для постов
+type PostListItem = {
+  id: string
+  title: string
+  date: string
+  description: string
+}
+
 export default function Home() {
-  const allPostsData = getSortedPostsData()
+  const allPostsData = getSortedPostsData() as PostListItem[]
 
   return (
     <main className='flex min-h-screen flex-col items-center py-12 px-4 md:py-16 bg-gray-50 dark:bg-gray-950'>

@@ -4,6 +4,15 @@ import matter from 'gray-matter'
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
 
+// Определяем интерфейс для данных поста
+export interface PostData {
+  id: string
+  title: string
+  date: string
+  description: string
+  content: string
+}
+
 export function getSortedPostsData() {
   try {
     // Проверка существования директории
@@ -73,6 +82,7 @@ export function getAllPostIds() {
       return []
     }
 
+    // Формат возвращаемых данных должен быть { id: string }
     return fileNames.map(fileName => {
       return {
         id: fileName.replace(/\.md$/, ''),
@@ -105,7 +115,7 @@ export function getAllPostParamsLegacy() {
   }
 }
 
-export async function getPostData(id: string) {
+export async function getPostData(id: string): Promise<PostData> {
   try {
     const fullPath = path.join(postsDirectory, `${id}.md`)
 

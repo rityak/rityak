@@ -1,21 +1,35 @@
-import { getPostData, getAllPostIds } from '@/lib/posts'
+import { getPostData, getAllPostIds, PostData } from '@/lib/posts'
 import Link from 'next/link'
 import PostContent from '@/components/PostContent'
 
+// Тип для параметров, которые возвращает generateStaticParams
+type StaticParams = {
+  id: string
+}[]
+
 // Экспортируем функцию для статической генерации параметров
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<StaticParams> {
   // Получаем все возможные ID постов в формате { id: string }
   const posts = getAllPostIds()
   console.log('Generated static params:', posts)
   return posts
 }
 
-export default async function Post({ params }: { params: { id: string } }) {
+// Указываем тип для параметров страницы
+type PageParams = {
+  params: {
+    id: string
+  }
+}
+
+export default async function Post({ params }: PageParams) {
   try {
-    const postData = await getPostData(params.id)
+    // Ожидаем получение params перед использованием его свойств
+    const resolvedParams = await params
+    const postData: PostData = await getPostData(resolvedParams.id)
 
     return (
-      <div className='max-w-[1024px] mx-auto px-4 sm:px-6 py-8 sm:py-12'>
+      <div className='max-w-[900px] mx-auto px-4 sm:px-6 py-8 sm:py-12'>
         <Link
           href='/'
           className='text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 mb-8 block hover:underline flex items-center gap-2'
@@ -36,11 +50,11 @@ export default async function Post({ params }: { params: { id: string } }) {
           <span>Назад к главной странице</span>
         </Link>
 
-        <article className='bg-white dark:bg-gray-900 shadow-sm rounded-lg p-6 sm:p-8 mb-6 overflow-x-auto'>
-          <header className='mb-8 border-b border-gray-200 dark:border-gray-700 pb-6'>
+        <article className='bg-white dark:bg-gray-900 shadow-sm rounded-lg p-6 sm:p-10 mb-6'>
+          <header className='mb-10 border-b border-gray-200 dark:border-gray-700 pb-8'>
             <time
               dateTime={postData.date}
-              className='text-blue-600 dark:text-blue-400 font-medium mb-2 block'
+              className='text-blue-600 dark:text-blue-400 font-medium mb-3 block'
             >
               {new Date(postData.date).toLocaleDateString('ru-RU', {
                 day: 'numeric',
@@ -48,24 +62,24 @@ export default async function Post({ params }: { params: { id: string } }) {
                 year: 'numeric',
               })}
             </time>
-            <h1 className='text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-white'>
+            <h1 className='text-3xl sm:text-4xl font-bold mb-6 text-gray-900 dark:text-white'>
               {postData.title}
             </h1>
-            <p className='text-lg sm:text-xl text-gray-600 dark:text-gray-300'>
+            <p className='text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-4'>
               {postData.description}
             </p>
           </header>
 
-          <div className='overflow-x-auto'>
+          <div className='overflow-x-auto px-0 sm:px-4'>
             <PostContent content={postData.content} />
           </div>
         </article>
       </div>
     )
   } catch (error) {
-    console.error(`Error rendering post ${params.id}:`, error)
+    console.error(`Error rendering post ${(await params).id}:`, error)
     return (
-      <div className='max-w-[1024px] mx-auto px-4 sm:px-6 py-8 sm:py-12'>
+      <div className='max-w-[900px] mx-auto px-4 sm:px-6 py-8 sm:py-12'>
         <Link
           href='/'
           className='text-blue-600 hover:text-blue-800 dark:text-blue-400 mb-6 block hover:underline flex items-center gap-2'
